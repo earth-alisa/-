@@ -1,0 +1,37 @@
+这段代码使用了 echarts 库来创建一个数据可视化图表。让我们逐行解析代码并理解其含义：
+
+1. `import * as echarts from 'echarts';` 导入 echarts 库，将其命名为 echarts。
+
+2. `var ROOT_PATH = 'https://echarts.apache.org/examples';` 定义了一个根路径常量，用于指定数据文件的基础路径。
+
+3. `var chartDom = document.getElementById('main');` 获取 HTML 中 id 为 'main' 的元素，该元素将用来渲染图表。
+
+4. `var myChart = echarts.init(chartDom);` 创建一个 echarts 实例，并将其绑定到指定的 DOM 元素上。
+
+5. `var option;` 定义了一个空的选项对象，稍后可能会被赋值。
+
+6. `myChart.showLoading();` 显示图表的加载动画。
+
+7. `$.get(ROOT_PATH + '/data/asset/geo/USA.json', function (usaJson) { ... });` 使用 jQuery 的 `$.get()` 函数发起 AJAX 请求，获取指定路径下的 USA.json 文件。
+
+8. 当 USA.json 文件加载成功后，回调函数被执行。在回调函数内部，首先隐藏图表的加载动画 `myChart.hideLoading();`。
+
+9. `echarts.registerMap('USA', usaJson, { ... });` 使用获取到的 USA.json 数据注册名为 'USA' 的地图，并设置特定区域（如阿拉斯加、夏威夷和波多黎各）的位置和大小。
+
+10. `var data = [ ... ];` 定义了一个数据数组，其中包含了各个州的名称和对应的人口值。
+
+11. `data.sort(function (a, b) { return a.value - b.value; });` 对数据数组进行排序，按照人口值从小到大的顺序排列。
+
+12. `const mapOption = { ... };` 定义了地图选项对象，包含了地图的可视化设置和数据。
+
+13. `const barOption = { ... };` 定义了柱状图选项对象，包含了柱状图的可视化设置和数据。
+
+14. `let currentOption = mapOption;` 定义了一个变量 `currentOption`，初始值为 `mapOption`。
+
+15. `myChart.setOption(mapOption);` 使用 `setOption()` 方法将地图选项应用到图表中，显示地图视图。
+
+16. `setInterval(function () { ... }, 2000);` 设置定时器，每隔两秒钟切换当前选项对象为地图选项或柱状图选项，并更新图表的显示。
+
+17. `option && myChart.setOption(option);` 如果选项对象 `option` 存在，则将其应用到图表中。
+
+总体而言，这段代码使用 echarts 库创建一个图表，并通过 AJAX 请求获取地图数据，以地图和柱状图的形式展示美国各州的人口数据，并在地图和柱状图之间进行动态切换。
